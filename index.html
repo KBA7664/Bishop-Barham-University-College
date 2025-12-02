@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bishop Barham University – Data Security & Privacy Prototype</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f6ff;
+        }
+        header {
+            background: #0037a2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 980px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 { color: #0037a2; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px 14px;
+            background: #0037a2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover { background: #0247ce; }
+        .success { color: green; }
+        .error { color: red; }
+        .card {
+            padding: 20px;
+            background: #f7f9ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0037a2;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Bishop Barham University</h1>
+    <h3>Prototype: Enhancing Data Security & Privacy in Academic Systems</h3>
+</header>
+
+<div class="container">
+
+    <!-- LOGIN UI -->
+    <div class="card">
+        <h2>1. Secure Login (Demo)</h2>
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="staff@bishopbarham.ac.ug">
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Minimum 8 characters">
+
+        <button onclick="login()">Login</button>
+        <p id="loginMsg"></p>
+    </div>
+
+    <!-- CONSENT FORM -->
+    <div class="card">
+        <h2>2. Student Data Privacy & Consent Form</h2>
+
+        <label>Student Name</label>
+        <input type="text" id="studentName" placeholder="John Doe">
+
+        <label>Email</label>
+        <input type="email" id="studentEmail" placeholder="student@bishopbarham.ac.ug">
+
+        <label>Purpose of Data Use</label>
+        <select id="purpose">
+            <option value="grades">Release of grades</option>
+            <option value="research">Research participation</option>
+            <option value="records">Academic records management</option>
+        </select>
+
+        <label><input type="checkbox" id="consentCheck"> I consent to the processing of my data.</label>
+
+        <button onclick="submitConsent()">Submit Consent</button>
+        <p id="consentMsg"></p>
+    </div>
+
+    <!-- FILE UPLOAD -->
+    <div class="card">
+        <h2>3. Secure File Upload (Demo)</h2>
+        <p>This demo checks file size & type before upload.</p>
+
+        <input type="file" id="fileInput" onchange="validateFile()">
+        <p id="fileMsg"></p>
+    </div>
+
+    <!-- SECURITY FEATURES -->
+    <div class="card">
+        <h2>4. Key Security Features (Explained)</h2>
+        <ul>
+            <li><strong>HTTPS Only:</strong> Prevents interception of data.</li>
+            <li><strong>Strong Authentication:</strong> MFA, secure passwords.</li>
+            <li><strong>Role-Based Access:</strong> Students, staff, admin.</li>
+            <li><strong>Data Minimization:</strong> Only collect required info.</li>
+            <li><strong>Audit Logs:</strong> Track who accessed student data.</li>
+            <li><strong>Encryption:</strong> Protect data in transit and at rest.</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+function login() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value.trim();
+    const msg = document.getElementById("loginMsg");
+
+    if (!email || pass.length < 8) {
+        msg.textContent = "Error: Enter a valid email and password (8+ characters).";
+        msg.className = "error";
+        return;
+    }
+
+    msg.textContent = "Login request validated — MFA required. (Prototype simulation)";
+    msg.className = "success";
+}
+
+function submitConsent() {
+    const name = document.getElementById("studentName").value.trim();
+    const email = document.getElementById("studentEmail").value.trim();
+    const consent = document.getElementById("consentCheck").checked;
+    const msg = document.getElementById("consentMsg");
+
+    if (!name || !email || !consent) {
+        msg.textContent = "Please fill all fields and provide consent.";
+        msg.className = "error";
+        return;
+    }
+
+    msg.textContent = "Consent recorded securely (simulation only).";
+    msg.className = "success";
+}
+
+function validateFile() {
+    const file = document.getElementById("fileInput").files[0];
+    const msg = document.getElementById("fileMsg");
+
+    if (!file) {
+        msg.textContent = "No file uploaded.";
+        msg.className = "error";
+        return;
+    }
+
+    // Size limit: 5MB
+    if (file.size > 5 * 1024 * 1024) {
+        msg.textContent = "File too large. Max 5MB.";
+        msg.className = "error";
+        return;
+    }
+
+    const allowed = ["pdf", "docx", "jpg", "png"];
+    const ext = file.name.split(".").pop().toLowerCase();
+
+    if (!allowed.includes(ext)) {
+        msg.textContent = "Invalid file type. Allowed: PDF, DOCX, JPG, PNG.";
+        msg.className = "error";
+        return;
+    }
+
+    msg.textContent = "File validated successfully (virus scan required on server).";
+    msg.className = "success";
+}
+</script>
+
+</body>
+</html>
